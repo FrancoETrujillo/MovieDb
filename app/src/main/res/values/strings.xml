@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MovieDbSample</string>
+
+    <string name="tv_shows">Tv Shows</string>
+    <string name="movies">Movies</string>
+    <string name="loading">Loading</string>
+    <string name="details">Details</string>
+    <string name="movie_title">Movie Title</string>
+</resources>
