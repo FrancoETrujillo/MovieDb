@@ -1,4 +1,4 @@
-package com.ftrujillo.moviedbsample.utils
+package com.ftrujillo.moviedbsample.core.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

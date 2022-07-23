@@ -1,10 +1,10 @@
-package com.ftrujillo.moviedbsample
+package com.ftrujillo.moviedbsample.core
 
 import android.app.Application
+import com.ftrujillo.moviedbsample.BuildConfig
 import com.ftrujillo.moviedbsample.di.moviesModule
 import com.ftrujillo.moviedbsample.di.networkModule
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import timber.log.Timber
 

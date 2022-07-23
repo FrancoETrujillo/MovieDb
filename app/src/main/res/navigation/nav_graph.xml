@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/MovieFragment"
-        android:name="com.ftrujillo.moviedbsample.ui.movie.MovieFragment"
+        android:name="com.ftrujillo.moviedbsample.presentation.movie_list.MovieFragment"
         android:label="@string/movies"
         tools:layout="@layout/fragment_movie"/>
     <fragment
         android:id="@+id/TvFragment"
-        android:name="com.ftrujillo.moviedbsample.ui.TvFragment"
+        android:name="com.ftrujillo.moviedbsample.presentation.TvFragment"
         android:label="@string/tv_shows"
         tools:layout="@layout/fragment_tv"/>
     <fragment
         android:id="@+id/DetailFragment"
-        android:name="com.ftrujillo.moviedbsample.ui.DetailFragment"
+        android:name="com.ftrujillo.moviedbsample.presentation.movie_details.DetailFragment"
         android:label="@string/details" />
 </navigation>

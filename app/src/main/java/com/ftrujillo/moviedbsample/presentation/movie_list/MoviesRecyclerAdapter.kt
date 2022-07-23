@@ -1,11 +1,11 @@
-package com.ftrujillo.moviedbsample.ui.movie
+package com.ftrujillo.moviedbsample.presentation.movie_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ftrujillo.moviedbsample.BuildConfig
 import com.ftrujillo.moviedbsample.databinding.MovieItemViewBinding
-import com.ftrujillo.moviedbsample.ui.datamodel.Movie
+import com.ftrujillo.moviedbsample.domain.datamodel.Movie
 import com.squareup.picasso.Picasso
 import timber.log.Timber
 

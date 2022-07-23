@@ -1,6 +1,6 @@
-package com.ftrujillo.moviedbsample.data.remote.entity
+package com.ftrujillo.moviedbsample.data.data_source.dto.popular_movies
 
-data class RemotePopularMovie(
+data class PopularMovieDto(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,

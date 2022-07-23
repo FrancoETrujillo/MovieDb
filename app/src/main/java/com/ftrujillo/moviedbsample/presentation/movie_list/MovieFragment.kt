@@ -1,13 +1,12 @@
-package com.ftrujillo.moviedbsample.ui.movie
+package com.ftrujillo.moviedbsample.presentation.movie_list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.ftrujillo.moviedbsample.core.utils.RequestDataWrapper
 import com.ftrujillo.moviedbsample.databinding.FragmentMovieBinding
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import timber.log.Timber
@@ -42,21 +41,30 @@ class MovieFragment : Fragment() {
         binding.recyclerView.layoutManager = GridLayoutManager(this.context, 3)
         binding.recyclerView.adapter = adapter
 
-        viewModel.movieList.observe(this.viewLifecycleOwner) {
-            it?.let { movieList ->
-                Timber.d("MovieList received $movieList")
-                binding.loadingViews.groupLoading.visibility = View.GONE
-                binding.recyclerView.visibility = View.VISIBLE
-                binding.refreshLayout.isRefreshing = false
-                adapter.updateList(it)
+        viewModel.movieList.observe(this.viewLifecycleOwner) { requestState ->
+            when (requestState){
+                is RequestDataWrapper.Success -> {
+                    Timber.d("MovieList received ${requestState.result}")
+                    binding.loadingViews.groupLoading.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.refreshLayout.isRefreshing = false
+                    requestState.result?.let { adapter.updateList(it) }
+                }
+                is RequestDataWrapper.Loading -> {
+                    binding.loadingViews.groupLoading.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.GONE
+                }
+                is RequestDataWrapper.Error -> {
+                    binding.loadingViews.groupLoading.visibility = View.GONE
+                    binding.recyclerView.visibility = View.GONE
+                }
             }
+
         }
 
         binding.refreshLayout.setOnRefreshListener {
             adapter.updateList(emptyList())
-            viewModel.refreshContent()
         }
-        viewModel.refreshContent()
     }
 
     override fun onDestroyView() {

@@ -1,15 +1,12 @@
-package com.ftrujillo.moviedbsample
+package com.ftrujillo.moviedbsample.presentation
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.*
+import com.ftrujillo.moviedbsample.R
 import com.ftrujillo.moviedbsample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

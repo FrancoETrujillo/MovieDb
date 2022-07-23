@@ -1,6 +1,6 @@
-package com.ftrujillo.moviedbsample.ui.datamodel
+package com.ftrujillo.moviedbsample.domain.datamodel
 
-import com.ftrujillo.moviedbsample.data.remote.entity.RemotePopularMovie
+import com.ftrujillo.moviedbsample.data.data_source.dto.popular_movies.PopularMovieDto
 
 data class Movie(
     val backdrop_path: String,
@@ -11,7 +11,7 @@ data class Movie(
     val title: String
 )
 
-fun RemotePopularMovie.toMovie(): Movie {
+fun PopularMovieDto.toMovie(): Movie {
     return Movie(
         backdrop_path = this.backdrop_path,
         id = this.id,

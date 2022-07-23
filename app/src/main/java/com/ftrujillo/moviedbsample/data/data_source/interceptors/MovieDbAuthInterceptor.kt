@@ -1,4 +1,4 @@
-package com.ftrujillo.moviedbsample.data.remote.interceptors
+package com.ftrujillo.moviedbsample.data.data_source.interceptors
 
 import com.ftrujillo.moviedbsample.BuildConfig
 import okhttp3.Interceptor

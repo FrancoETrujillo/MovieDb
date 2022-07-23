@@ -1,9 +1,7 @@
-package com.ftrujillo.moviedbsample.data.remote.interceptors
+package com.ftrujillo.moviedbsample.data.data_source.interceptors
 
-import android.content.Context
-import android.net.ConnectivityManager
-import com.ftrujillo.moviedbsample.utils.NetworkInfoProvider
-import com.ftrujillo.moviedbsample.utils.NoConnectivityException
+import com.ftrujillo.moviedbsample.core.utils.NetworkInfoProvider
+import com.ftrujillo.moviedbsample.core.utils.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
 

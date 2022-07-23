@@ -1,4 +1,4 @@
-package com.ftrujillo.moviedbsample.ui
+package com.ftrujillo.moviedbsample.presentation.movie_details
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

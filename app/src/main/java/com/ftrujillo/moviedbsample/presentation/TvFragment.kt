@@ -1,4 +1,4 @@
-package com.ftrujillo.moviedbsample.ui
+package com.ftrujillo.moviedbsample.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
