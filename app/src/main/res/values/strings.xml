@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">MovieDbSample</string>
+    <string name="app_name">Movies Sample</string>
 
     <string name="tv_shows">Tv Shows</string>
     <string name="movies">Movies</string>
     <string name="loading">Loading</string>
     <string name="details">Details</string>
     <string name="movie_title">Movie Title</string>
+    <string name="overview_lbl">Overview</string>
+    <string name="release_date_lbl">Release date</string>
 </resources>

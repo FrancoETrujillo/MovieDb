@@ -9,14 +9,16 @@
         android:id="@+id/MovieFragment"
         android:name="com.ftrujillo.moviedbsample.presentation.movie_list.MovieFragment"
         android:label="@string/movies"
-        tools:layout="@layout/fragment_movie"/>
-    <fragment
-        android:id="@+id/TvFragment"
-        android:name="com.ftrujillo.moviedbsample.presentation.TvFragment"
-        android:label="@string/tv_shows"
-        tools:layout="@layout/fragment_tv"/>
+        tools:layout="@layout/fragment_movie">
+        <action
+            android:id="@+id/action_MovieFragment_to_DetailFragment"
+            app:destination="@id/DetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/DetailFragment"
         android:name="com.ftrujillo.moviedbsample.presentation.movie_details.DetailFragment"
-        android:label="@string/details" />
+        android:label="@string/details" >
+        <argument android:name="movieId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

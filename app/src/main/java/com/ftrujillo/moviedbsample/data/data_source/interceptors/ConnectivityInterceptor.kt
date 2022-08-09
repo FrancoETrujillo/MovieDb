@@ -10,5 +10,4 @@ class ConnectivityInterceptor(private val networkInfoProvider: NetworkInfoProvid
         if(!networkInfoProvider.isNetworkAvailable()) throw NoConnectivityException()
         return chain.proceed(chain.request())
     }
-
 }

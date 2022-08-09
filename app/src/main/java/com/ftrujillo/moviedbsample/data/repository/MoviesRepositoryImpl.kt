@@ -1,5 +1,6 @@
 package com.ftrujillo.moviedbsample.data.repository
 
+import com.ftrujillo.moviedbsample.core.utils.DispatcherProvider
 import com.ftrujillo.moviedbsample.core.utils.RemoteRequestWrapper
 import com.ftrujillo.moviedbsample.data.data_source.remote.MovieDbApi
 import com.ftrujillo.moviedbsample.domain.datamodel.Movie
@@ -15,9 +16,12 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.util.Locale
 
-class MoviesRepositoryImpl(private val moviesRemoteSource: MoviesRemoteSource) {
+class MoviesRepositoryImpl(
+    private val moviesRemoteSource: MoviesRemoteSource,
+    private val dispatcherProvider: DispatcherProvider
+) : MoviesRepository {
 
-    fun getPopularMovies() = flow {
+    override fun getPopularMovies() = flow {
         emit(RequestDataWrapper.Loading())
         val movies = when (val moviesResponse =
             moviesRemoteSource.getPopularMoviesByPage(Locale.getDefault().language, 1)) {
@@ -26,9 +30,9 @@ class MoviesRepositoryImpl(private val moviesRemoteSource: MoviesRemoteSource) {
         }
         emit(movies)
 
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcherProvider.io)
 
-    fun getMovieDetails(movieId: Int) = flow {
+    override fun getMovieDetails(movieId: Int) = flow {
         emit(RequestDataWrapper.Loading())
         val movies = when (val moviesResponse =
             moviesRemoteSource.getMovieDetails(movieId)) {
@@ -36,7 +40,6 @@ class MoviesRepositoryImpl(private val moviesRemoteSource: MoviesRemoteSource) {
             is RemoteRequestWrapper.Error -> RequestDataWrapper.Error("${moviesResponse.errorMessage}")
         }
         emit(movies)
-    }.flowOn(Dispatchers.IO)
-
+    }.flowOn(dispatcherProvider.io)
 
 }

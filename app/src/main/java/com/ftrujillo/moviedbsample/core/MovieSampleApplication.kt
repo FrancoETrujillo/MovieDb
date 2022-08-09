@@ -2,6 +2,7 @@ package com.ftrujillo.moviedbsample.core
 
 import android.app.Application
 import com.ftrujillo.moviedbsample.BuildConfig
+import com.ftrujillo.moviedbsample.di.dataModule
 import com.ftrujillo.moviedbsample.di.moviesModule
 import com.ftrujillo.moviedbsample.di.networkModule
 import org.koin.android.ext.koin.androidContext
@@ -16,10 +17,10 @@ class MovieSampleApplication : Application() {
             listOf(
                 modules(
                     moviesModule,
+                    dataModule,
                     networkModule
                 )
             )
-
         }
 
         if (BuildConfig.DEBUG) {

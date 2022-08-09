@@ -1,7 +1,10 @@
 package com.ftrujillo.moviedbsample.domain.datamodel
 
+import android.os.Parcelable
 import com.ftrujillo.moviedbsample.data.data_source.dto.popular_movies.PopularMovieDto
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Movie(
     val backdrop_path: String,
     val id: Int,
@@ -9,7 +12,7 @@ data class Movie(
     val popularity: Double,
     val poster_path: String,
     val title: String
-)
+) : Parcelable
 
 fun PopularMovieDto.toMovie(): Movie {
     return Movie(

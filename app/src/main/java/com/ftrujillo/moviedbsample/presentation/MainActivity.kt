@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavComponents() {
-        setSupportActionBar(binding.toolbar)
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
 
         binding.bottomNavigation.setupWithNavController(navController)
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.MovieFragment, R.id.TvFragment -> binding.bottomNavigation.visibility =
+                R.id.MovieFragment -> binding.bottomNavigation.visibility =
                     View.VISIBLE
                 else -> binding.bottomNavigation.visibility = View.GONE
             }
