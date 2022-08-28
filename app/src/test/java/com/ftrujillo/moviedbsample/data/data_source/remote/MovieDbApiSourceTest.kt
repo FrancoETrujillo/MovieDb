@@ -4,6 +4,7 @@ import com.ftrujillo.moviedbsample.ResourceHelper
 import com.ftrujillo.moviedbsample.core.utils.RemoteRequestWrapper
 import com.ftrujillo.moviedbsample.di.createMovieApi
 import com.ftrujillo.moviedbsample.di.createOkHttpClient
+import com.ftrujillo.moviedbsample.domain.datamodel.Movie
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.Dispatcher
@@ -74,6 +75,8 @@ class MovieDbApiSourceTest : KoinTest {
 
         runBlocking {
             val popularMovies = movieDbApiSource.getPopularMoviesByPage("en", 1)
+            assertThat(popularMovies).isInstanceOf(RemoteRequestWrapper.Success::class.java)
+            popularMovies as RemoteRequestWrapper.Success
             assertThat(popularMovies.result).isNotEmpty()
         }
     }

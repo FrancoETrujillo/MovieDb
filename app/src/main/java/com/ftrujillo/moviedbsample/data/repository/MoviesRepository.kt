@@ -6,6 +6,6 @@ import com.ftrujillo.moviedbsample.domain.datamodel.MovieDetails
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
-    fun getPopularMovies(): Flow<RequestDataWrapper<List<Movie>?>>
-    fun getMovieDetails(movieId: Int): Flow<RequestDataWrapper<MovieDetails?>>
+    fun getPopularMovies(forced: Boolean): Flow<RequestDataWrapper<List<Movie>>>
+    fun getMovieDetails(movieId: Int): Flow<RequestDataWrapper<MovieDetails>>
 }

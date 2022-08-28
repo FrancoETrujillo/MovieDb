@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ftrujillo.moviedbsample.core.utils.RequestDataWrapper
 import com.ftrujillo.moviedbsample.databinding.FragmentMovieBinding
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
@@ -37,11 +42,14 @@ class MovieFragment : Fragment() {
 
         initViews()
         setupObservers()
-
+        viewModel.getMovies(false)
     }
 
     private fun initViews(){
         adapter = MoviesRecyclerAdapter()
+        binding.refreshLayout.setOnRefreshListener {
+            viewModel.getMovies(true)
+        }
         binding.recyclerView.layoutManager = GridLayoutManager(this.context, 3)
         binding.recyclerView.adapter = adapter
         adapter.onMovieClickListener = { movie ->
@@ -52,26 +60,22 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.movieList.observe(this.viewLifecycleOwner) { requestState ->
-            when (requestState) {
-                is RequestDataWrapper.Success -> {
-                    showLoading(false)
-                    binding.recyclerView.visibility = View.VISIBLE
-                    requestState.result?.let { adapter.movieList = it }
-                }
-                is RequestDataWrapper.Loading -> {
-                    showLoading(true)
-                }
-                is RequestDataWrapper.Error -> {
-                    showLoading(false)
-                    binding.loadingViews.groupLoading.visibility = View.GONE
-                    binding.recyclerView.visibility = View.GONE
+        viewModel.movieList.observe(this.viewLifecycleOwner) { viewState ->
+            showLoading(viewState.loading)
+            adapter.movieList = viewState.movieList
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.promptFlow.collect{
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
     private fun showLoading(show: Boolean) {
+        binding.refreshLayout.isRefreshing = show
         binding.loadingViews.groupLoading.visibility = if (show) View.VISIBLE else View.GONE
     }
 

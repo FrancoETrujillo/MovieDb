@@ -1,5 +1,8 @@
 package com.ftrujillo.moviedbsample.data.data_source.dto.popular_movies
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class PopularMovieDto(
     val adult: Boolean,
     val backdrop_path: String,
@@ -9,7 +12,7 @@ data class PopularMovieDto(
     val original_title: String,
     val overview: String,
     val popularity: Double,
-    val poster_path: String,
+    val poster_path: String?,
     val release_date: String,
     val title: String,
     val video: Boolean,

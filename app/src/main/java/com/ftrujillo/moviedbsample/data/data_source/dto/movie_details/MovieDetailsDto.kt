@@ -1,9 +1,12 @@
 package com.ftrujillo.moviedbsample.data.data_source.dto.movie_details
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class MovieDetailsDto(
     val adult: Boolean,
     val backdrop_path: String,
-    val belongs_to_collection: BelongsToCollection,
+    val belongs_to_collection: BelongsToCollection?,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String,

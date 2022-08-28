@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ftrujillo.moviedbsample.BuildConfig
 import com.ftrujillo.moviedbsample.databinding.MovieItemViewBinding
 import com.ftrujillo.moviedbsample.domain.datamodel.Movie
-import com.squareup.picasso.Picasso
-import timber.log.Timber
+import com.ftrujillo.moviedbsample.presentation.loadFromUrl
 
 class MoviesRecyclerAdapter :
     RecyclerView.Adapter<MoviesRecyclerAdapter.MovieItemViewHolder>() {
@@ -32,9 +31,7 @@ class MoviesRecyclerAdapter :
         holder.binding.apply {
             textMovieCard.text = movie.title
             val imageUrl = "${BuildConfig.MOVIE_API_POSTER_BASE_URL}${movie.poster_path}"
-            Timber.d("Trying to load image from: $imageUrl")
-            Picasso.get().load(imageUrl)
-                .into(imageMovieCard)
+            imageMovieCard.loadFromUrl(imageUrl)
             root.setOnClickListener {
                 onMovieClickListener?.invoke(movie)
             }
@@ -51,12 +48,10 @@ class MoviesRecyclerAdapter :
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem == newItem
         }
-
     }
 
     private val asyncDiffer = AsyncListDiffer(this, diffCallback)
 
     inner class MovieItemViewHolder(val binding: MovieItemViewBinding) :
         RecyclerView.ViewHolder(binding.root)
-
 }
