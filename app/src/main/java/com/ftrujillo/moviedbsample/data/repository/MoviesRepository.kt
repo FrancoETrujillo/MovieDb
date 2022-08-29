@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface MoviesRepository {
     fun getPopularMovies(forced: Boolean): Flow<RequestDataWrapper<List<Movie>>>
     fun getMovieDetails(movieId: Int): Flow<RequestDataWrapper<MovieDetails>>
+    suspend fun cacheMovieDetails(movieIdList: List<Int>)
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ftrujillo.moviedbsample.BuildConfig
 import com.ftrujillo.moviedbsample.databinding.MovieItemViewBinding
 import com.ftrujillo.moviedbsample.domain.datamodel.Movie
-import com.ftrujillo.moviedbsample.presentation.loadFromUrl
+import com.ftrujillo.moviedbsample.presentation.utils.loadFromUrl
 
 class MoviesRecyclerAdapter :
     RecyclerView.Adapter<MoviesRecyclerAdapter.MovieItemViewHolder>() {

@@ -18,7 +18,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import kotlin.math.sin
 
 val moviesModule = module {
     single<DispatcherProvider> { AppDispatchers() }
@@ -29,8 +28,8 @@ val moviesModule = module {
 val dataModule = module {
     single { createMovieApi(BuildConfig.MOVIE_API_BASE_URL, get()) }
     single<MoviesRemoteSource> { MovieDbApiSource(get()) }
-    single { createMovieDatabase(androidContext())}
-    single { get<MovieDataBase>().moviesDao()}
+    single { createMovieDatabase(androidContext()) }
+    single { get<MovieDataBase>().moviesDao() }
 }
 
 val networkModule = module {

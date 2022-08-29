@@ -1,4 +1,4 @@
-package com.ftrujillo.moviedbsample.presentation
+package com.ftrujillo.moviedbsample.presentation.utils
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

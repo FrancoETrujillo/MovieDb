@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ftrujillo.moviedbsample.databinding.FragmentDetailBinding
-import com.ftrujillo.moviedbsample.presentation.loadFromUrl
+import com.ftrujillo.moviedbsample.presentation.utils.loadFromUrl
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class DetailFragment : Fragment() {

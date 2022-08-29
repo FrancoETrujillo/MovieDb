@@ -8,9 +8,13 @@ import com.ftrujillo.moviedbsample.data.data_source.remote.MoviesRemoteSource
 import com.ftrujillo.moviedbsample.data.storage.MoviesDao
 import com.ftrujillo.moviedbsample.domain.datamodel.Movie
 import com.ftrujillo.moviedbsample.domain.datamodel.MovieDetails
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class MoviesRepositoryImpl(
@@ -61,7 +65,13 @@ class MoviesRepositoryImpl(
 
     override fun getMovieDetails(movieId: Int) = flow {
         emit(RequestDataWrapper.Loading())
-        emit(fetchAndSaveMovieDetail(movieId))
+        val detail = moviesDao.getMovieDetail(movieId)
+        if (detail == null) {
+            emit(fetchAndSaveMovieDetail(movieId))
+        }
+        detail?.let {
+            emit(RequestDataWrapper.Success(it))
+        }
     }.flowOn(dispatcherProvider.io)
 
     private suspend fun fetchAndSaveMovieDetail(movieId: Int): RequestDataWrapper<MovieDetails> {
@@ -76,6 +86,22 @@ class MoviesRepositoryImpl(
                 val movieDetail = moviesDao.getMovieDetail(movieId)
                 return RequestDataWrapper.Error(movieDetailResponse.errorMessage, movieDetail)
             }
+        }
+    }
+
+    override suspend fun cacheMovieDetails(movieIdList: List<Int>) {
+        withContext(dispatcherProvider.io) {
+            val jobList = mutableListOf<Deferred<Unit>>()
+            movieIdList.forEach { id ->
+                val job = async {
+                    val movieDetailResponse = moviesRemoteSource.getMovieDetails(id)
+                    if (movieDetailResponse is RemoteRequestWrapper.Success) {
+                        moviesDao.upsertMoviesDetails(movieDetailResponse.result)
+                    }
+                }
+                jobList.add(job)
+            }
+            jobList.awaitAll()
         }
     }
 

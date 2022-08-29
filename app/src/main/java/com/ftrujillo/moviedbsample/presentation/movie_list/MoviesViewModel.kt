@@ -10,14 +10,16 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class MoviesViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
+class MoviesViewModel(
+    private val moviesRepository: MoviesRepository,
+) : ViewModel() {
     private val _movieLiveData = MutableLiveData<MoviesFragmentViewState>()
     private val promptChannel = Channel<String>()
     val promptFlow = promptChannel.receiveAsFlow()
 
     fun getMovies(forced: Boolean) {
         viewModelScope.launch {
-            moviesRepository.getPopularMovies(forced).collect {
+            moviesRepository.getPopularMovies(forced).collect { it ->
                 when (it) {
                     is RequestDataWrapper.Error -> {
                         if (!it.result.isNullOrEmpty()) {
@@ -32,9 +34,10 @@ class MoviesViewModel(private val moviesRepository: MoviesRepository) : ViewMode
                     is RequestDataWrapper.Loading -> _movieLiveData.postValue(
                         MoviesFragmentViewState(loading = true)
                     )
-                    is RequestDataWrapper.Success -> _movieLiveData.postValue(
-                        MoviesFragmentViewState(it.result)
-                    )
+                    is RequestDataWrapper.Success -> {
+                        _movieLiveData.postValue(MoviesFragmentViewState(it.result))
+                        moviesRepository.cacheMovieDetails(it.result.map { movie -> movie.id })
+                    }
                 }
             }
         }
